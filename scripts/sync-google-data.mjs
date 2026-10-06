@@ -40,8 +40,8 @@ export async function buildData(configPath,outputPath){
   const clean=(rows,fields)=>rows.filter(published).map(row=>Object.fromEntries(fields.map(field=>[field,row[field]||''])));
   const result={
     meta:{siteName:settings.siteName||'彰化縣立和美高中學生會',currentTerm:settings.currentTerm||'',lastUpdated:new Date().toISOString().slice(0,10),schoolUrl:settings.schoolUrl||'',feedbackFormUrl:settings.feedbackFormUrl||''},
-    announcements:clean(sheets.announcements||[],['id','date','category','title','summary','url']).sort((a,b)=>b.date.localeCompare(a.date)),
-    activities:clean(sheets.activities||[],['id','date','end_date','title','location','summary','registration_url','result_url']).sort((a,b)=>b.date.localeCompare(a.date)),
+    announcements:clean(sheets.announcements||[],['id','date','category','title','summary','url','image_url','attachment_url','attachment_label']).sort((a,b)=>b.date.localeCompare(a.date)),
+    activities:clean(sheets.activities||[],['id','date','end_date','title','location','summary','registration_url','result_url','image_url','attachment_url','attachment_label']).sort((a,b)=>b.date.localeCompare(a.date)),
     rights:[
       {title:'會員身分',items:['本校高中部全體學生均為學生會當然會員','繳交會費者為完全會員','完全會員除享有會員權利外，並依規定享有學生會提供之優惠']},
       {title:'會員權利',items:['享有選舉、被選舉及罷免之權利','得擔任學生會相關職務並參與學生會活動','非行政、立法部門成員得依章程申請列席班代大會']},
@@ -49,7 +49,7 @@ export async function buildData(configPath,outputPath){
       {title:'班級代表與監督',items:['每班選出兩位班級代表組成班代大會','班代得行使提案、監督及人事同意權','班代應反映班級意見，並傳達、監督學生會政策']}
     ],
     terms,
-    documents:clean(sheets.documents||[],['id','category','title','term','date','url']).sort((a,b)=>b.date.localeCompare(a.date))
+    documents:clean(sheets.documents||[],['id','category','title','term','date','url','file_type']).sort((a,b)=>b.date.localeCompare(a.date))
   };
   if(!result.terms.length)throw new Error('沒有任何 published=TRUE 的屆次資料，已停止更新以保護現有網站。');
   await fs.writeFile(outputPath,JSON.stringify(result,null,2)+'\n','utf8');
