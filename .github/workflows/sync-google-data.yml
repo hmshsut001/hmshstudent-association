@@ -1,0 +1,24 @@
+name: 同步 Google 試算表資料
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: 下載並檢查公開資料
+        run: node scripts/sync-google-data.mjs config/google-sheets.json data/site.json
+      - name: 儲存更新
+        run: |
+          git config user.name "student-association-data-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/site.json
+          git diff --cached --quiet || git commit -m "data: sync Google Sheets"
+          git push
