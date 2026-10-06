@@ -21,6 +21,8 @@
 
 只有預定公開的資料工作表可以「發布至網路」。學生提案表單回覆、姓名、電子郵件及其他個資不得公開。
 
+公告與活動可在試算表填入 `image_url`、`attachment_url` 與 `attachment_label`，顯示公開圖片及 Word、Excel、PowerPoint、PDF 等附件。資訊公開文件可用 `file_type` 標示 `PDF`、`WORD`、`EXCEL` 或 `PPT`。所有 Drive 檔案都必須先設為「知道連結的任何人可檢視」。
+
 完整設定請見同層輸出中的 `GOOGLE-MANAGEMENT.md`；換屆請見 `HANDOFF.md`。
 
 ## 第 10 屆資料狀態
